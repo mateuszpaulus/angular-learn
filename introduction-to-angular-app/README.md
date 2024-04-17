@@ -1,5 +1,7 @@
 # IntroductionToAngularApp
 
+### This part of the repository provides an introduction to basic concept of Angular and includes code examples
+
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 17.3.5.
 
 ## Development server
