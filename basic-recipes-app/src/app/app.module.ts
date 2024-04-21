@@ -11,6 +11,7 @@ import {RecipeListComponent} from './recipes/recipe-list/recipe-list.component';
 import {RecipeItemComponent} from './recipes/recipe-list/recipe-item/recipe-item.component';
 import {NgOptimizedImage} from "@angular/common";
 import {FormsModule} from '@angular/forms';
+import {ShoppingListService} from "./shopping-list/shopping-list.service";
 import {DropdownDirective} from "./shared/dropdown.directive";
 
 @NgModule({
@@ -30,7 +31,7 @@ import {DropdownDirective} from "./shared/dropdown.directive";
     NgOptimizedImage,
     FormsModule
   ],
-  providers: [],
+  providers: [ShoppingListService],
   bootstrap: [AppComponent]
 })
 export class AppModule {
