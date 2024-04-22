@@ -1,6 +1,6 @@
-# IntroductionToAngularApp
+# HowToUsePageRoutingApp
 
-### This part of the repository provides an introduction to basic concept of Angular and includes code examples
+### This part of the repository provides an introduction to basic concept of routing in Angular
 
 ___
 
