@@ -1,4 +1,7 @@
-<a (click)="onSelected()" class="list-group-item clearfix" href="#">
+<!--<a (click)="onSelected()" class="list-group-item clearfix" style="cursor: pointer;">-->
+<a [routerLink]="[index]" class="list-group-item clearfix "
+   routerLinkActive="active"
+   style="cursor: pointer;">
   <div class="pull-left">
     <h4 class="list-group-item-heading">
       {{ recipe.name }}
@@ -6,7 +9,8 @@
     <p class="list-group-item-text">{{ recipe.description }}</p>
   </div>
   <span class="pull-right">
-        <img [ngSrc]="recipe.imagePath" alt="{{recipe.name}}" class="img-responsive" height="50"
+        <img [ngSrc]="recipe.imagePath" alt="{{recipe.name}}"
+             class="img-responsive" height="50"
              width="50">
       </span>
 </a>
