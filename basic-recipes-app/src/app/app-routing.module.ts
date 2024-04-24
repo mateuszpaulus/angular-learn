@@ -18,20 +18,18 @@ const appRoutes: Routes = [
       {
         path: '',
         component: RecipeStartComponent,
-        // resolve: {server: ServerResolver}
-      },
-      {
-        path: ':id',
-        component: RecipeDetailComponent,
-        // canDeactivate: [CanDeactivateGuard]
-      }, {
-        path: ':id/edit',
-        component: RecipeEditComponent,
       },
       {
         path: 'new',
         component: RecipeEditComponent,
-      }
+      },
+      {
+        path: ':id',
+        component: RecipeDetailComponent,
+      }, {
+        path: ':id/edit',
+        component: RecipeEditComponent,
+      },
     ]
   },
   {
