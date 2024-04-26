@@ -26,12 +26,14 @@ import {AuthComponent} from "./auth/auth.component";
 import {
   LoadingSpinnerComponent
 } from "./shared/loading-spinner/loading-spinner.component";
+import {AlertComponent} from "./shared/alert/alert.component";
 
 import {ShoppingListService} from "./shopping-list/shopping-list.service";
 import {RecipeService} from "./recipes/recipe.service";
 import {DropdownDirective} from "./shared/dropdown.directive";
 import {AppRoutingModule} from "./app-routing.module";
 import {AuthInterceptorService} from "./auth/auth-interceptor.service";
+import {PlaceholderDirective} from "./shared/placeholder/placeholder.directive";
 
 @NgModule({
   declarations: [
@@ -48,7 +50,9 @@ import {AuthInterceptorService} from "./auth/auth-interceptor.service";
     RecipeStartComponent,
     RecipeEditComponent,
     AuthComponent,
-    LoadingSpinnerComponent
+    LoadingSpinnerComponent,
+    AlertComponent,
+    PlaceholderDirective
   ],
   imports: [
     BrowserModule,
@@ -67,7 +71,10 @@ import {AuthInterceptorService} from "./auth/auth-interceptor.service";
       multi: true
     }
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  // entryComponents: [
+  //   AlertComponent
+  // ]
 })
 export class AppModule {
 }
