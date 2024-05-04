@@ -3,35 +3,19 @@ import {Subject} from "rxjs";
 
 import {RecipeModel} from "./recipe.model";
 import {IngredientModel} from "../shared/ingredient.model";
-import {ShoppingListService} from "../shopping-list/shopping-list.service";
+import {Store} from "@ngrx/store";
+import * as ShoppingListActions
+  from "../shopping-list/store/shopping-list.actions"
+import * as fromShoppingList from '../shopping-list/store/shopping-list.reducer'
 
 @Injectable()
 export class RecipeService {
-  // recipeSelected = new EventEmitter<RecipeModel>();
   recipesChanged = new Subject<RecipeModel[]>();
-  // private recipes: RecipeModel[] = [
-  //   new RecipeModel('test1',
-  //     'desc',
-  //     'https://marketplace.canva.com/EAFjF3L3SYk/2/0/1600w/canva-grey-beige-minimalist-apple-pie-recipe-card-FWhb_7OLPUY.jpg',
-  //     [
-  //       new IngredientModel('Meet', 3),
-  //       new IngredientModel('Meet', 3),
-  //       new IngredientModel('Meet', 3),
-  //     ]
-  //   ),
-  //   new RecipeModel('test',
-  //     'desc',
-  //     'https://marketplace.canva.com/EAFjF3L3SYk/2/0/1600w/canva-grey-beige-minimalist-apple-pie-recipe-card-FWhb_7OLPUY.jpg',
-  //     [
-  //       new IngredientModel('Meet', 3),
-  //       new IngredientModel('Meet', 3),
-  //       new IngredientModel('Meet', 3),
-  //     ]
-  //   )
-  // ];
   private recipes: RecipeModel[] = [];
 
-  constructor(private shoppingListService: ShoppingListService) {
+  constructor(
+    private store: Store<fromShoppingList.AppState>
+  ) {
   }
 
   setRecipes(recipes: RecipeModel[]) {
@@ -48,7 +32,9 @@ export class RecipeService {
   };
 
   addIngredientsToShoppingList(ingredients: IngredientModel[]) {
-    this.shoppingListService.addIngredients(ingredients);
+    this.store.dispatch(new ShoppingListActions.AddIngredients(ingredients))
+    // Alternative syntax:
+    // this.store.dispatch(ShoppingListActions.AddIngredients({ ingredients: ingredients }));
   };
 
   addRecipe(recipe: RecipeModel) {
