@@ -1,43 +1,36 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
-import {Subscription} from "rxjs";
+import {Component, OnInit} from '@angular/core';
+import {Observable} from "rxjs";
+import {Store} from '@ngrx/store';
 
 import {IngredientModel} from "../shared/ingredient.model";
-import {ShoppingListService} from "./shopping-list.service";
+import {LoggingService} from "../logging.service";
+import * as fromShoppingList from './store/shopping-list.reducer'
+import * as ShoppingListActions from './store/shopping-list.actions'
 
 @Component({
   selector: 'app-shopping-list',
   templateUrl: './shopping-list.component.html',
   styleUrl: './shopping-list.component.css',
 })
-export class ShoppingListComponent implements OnInit, OnDestroy {
+export class ShoppingListComponent implements OnInit {
 
-  // ingredients: IngredientModel[] = [
-  //   new IngredientModel('Apples', 5),
-  //   new IngredientModel('Tomatoes', 10)
-  // ];
-  ingredients: IngredientModel[];
-  private ingredientChangeSub: Subscription;
+  ingredients: Observable<{ ingredients: IngredientModel[] }>;
 
-  constructor(private shoppingListService: ShoppingListService) {
+  constructor(
+    private loggingService: LoggingService,
+    private store: Store<fromShoppingList.AppState>
+  ) {
   }
 
   ngOnInit() {
-    this.ingredients = this.shoppingListService.getIngredients();
-    this.ingredientChangeSub = this.shoppingListService.ingredientsChange.subscribe(
-      (ingredients: IngredientModel[]) =>
-        this.ingredients = ingredients
-    );
+    this.ingredients = this.store.select('shoppingList');
+
+    this.loggingService.printLog('Hello from ShoppingListComponent ngOnInit!');
   }
 
   onEditItem(index: number) {
-    this.shoppingListService.startedEditing.next(index);
+    this.store.dispatch(new ShoppingListActions.StartEdit(index));
+    // Alternative syntax:
+    // this.store.dispatch(ShoppingListActions.StartEdit({ index: index }));
   };
-
-  ngOnDestroy() {
-    this.ingredientChangeSub.unsubscribe();
-  }
-
-  // onIngredientAdded(ingredient: IngredientModel) {
-  //   this.ingredients.push(ingredient);
-  // };
 }
