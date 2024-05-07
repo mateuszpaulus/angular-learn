@@ -18,7 +18,8 @@ export function authReducer(
   action: AuthActions.AuthActions
 ) {
   switch (action.type) {
-    case AuthActions.LOGIN:
+    case AuthActions.AUTHENTICATE_SUCCESS:
+      console.log('xxxxxx')
       const user = new UserModel(
         action.payload.email,
         action.payload.userId,
@@ -37,18 +38,24 @@ export function authReducer(
         user: null
       };
     case AuthActions.LOGIN_START:
+    case AuthActions.SIGNUP_START:
       return {
         ...state,
         authError: null,
         loading: true
       };
-    case AuthActions.LOGIN_FAIL:
+    case AuthActions.AUTHENTICATE_FAIL:
       return {
         ...state,
         user: null,
         authError: action.payload,
         loading: false
       };
+    case AuthActions.CLEAR_ERROR:
+      return {
+        ...state,
+        authError: null
+      }
     default:
       return state;
   }
@@ -63,16 +70,20 @@ export function authReducer(
 
 // export interface State {
 //   user: User;
+//   authError: string;
+//   loading: boolean;
 // }
 
 // const initialState: State = {
-//   user: null
+//   user: null,
+//   authError: null,
+//   loading: false
 // };
 
 // export const authReducer = createReducer(
 //   initialState,
 //   on(
-//     AuthActions.login,
+//     AuthActions.authenticateSuccess,
 //     (state, action) => {
 //       const user = new User(
 //         action.email,
@@ -82,7 +93,9 @@ export function authReducer(
 //       );
 //       return {
 //         ...state,
-//         user: user
+//         authError: null,
+//         user: user,
+//         loading: false
 //       };
 //     }
 //   ),
@@ -92,6 +105,36 @@ export function authReducer(
 //       return {
 //         ...state,
 //        user: null
+//       };
+//     }
+//   ),
+//   on(
+//     AuthActions.loginStart,
+//     (state) => {
+//       return {
+//         ...state,
+//         authError: null,
+//         loading: true
+//       };
+//     }
+//   ),
+//   on(
+//     AuthActions.authenticateFail,
+//     (state, action) => {
+//       return {
+//         ...state,
+//         user: null,
+//         authError: action.error,
+//         loading: false
+//       };
+//     }
+//   ),
+//   on(
+//     AuthActions.clearError,
+//     (state) => {
+//       return {
+//         ...state,
+//         authError: null
 //       };
 //     }
 //   )
