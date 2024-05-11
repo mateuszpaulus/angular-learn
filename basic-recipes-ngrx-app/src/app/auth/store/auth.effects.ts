@@ -39,6 +39,7 @@ const handleAuthentication = (
     userId: userId,
     token: token,
     expirationDate: expirationDate,
+    redirect: true
   });
   // Alternative syntax:
   // return AuthActions.authenticateSuccess({
@@ -166,8 +167,10 @@ export class AuthEffects {
         ofType(AuthActions.AUTHENTICATE_SUCCESS),
         // Alternative syntax:
         // ofType(AuthActions.authenticateSuccess),
-        tap(() => {
-          this.router.navigate(['/']);
+        tap((authSuccessAction: AuthActions.AuthenticateSuccess) => {
+          if (authSuccessAction.payload.redirect) {
+            this.router.navigate(['/']);
+          }
         })
       ),
     {dispatch: false}
@@ -188,7 +191,6 @@ export class AuthEffects {
           if (!userData) {
             return {type: 'Not login'};
           }
-          console.log('x')
           const loadedUser = new UserModel(
             userData.email,
             userData.id,
@@ -197,7 +199,6 @@ export class AuthEffects {
           );
 
           if (loadedUser.token) {
-            console.log('x2')
             const expirationDuration =
               new Date(userData._tokenExpirationDate).getTime() -
               new Date().getTime();
@@ -206,7 +207,8 @@ export class AuthEffects {
               email: loadedUser.email,
               userId: loadedUser.id,
               token: loadedUser.token,
-              expirationDate: new Date(userData._tokenExpirationDate)
+              expirationDate: new Date(userData._tokenExpirationDate),
+              redirect: false
             });
 
             // Alternative syntax:
