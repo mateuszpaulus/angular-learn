@@ -1,9 +1,10 @@
 import {Component, OnDestroy, OnInit,} from '@angular/core';
 import {ActivatedRoute, Router} from "@angular/router";
-import {Subscription} from "rxjs";
+import {map, pipe, Subscription} from "rxjs";
+import {Store} from "@ngrx/store";
 
 import {RecipeModel} from "../recipe.model";
-import {RecipeService} from "../recipe.service";
+import * as fromApp from '../../store/app.reducer'
 
 @Component({
   selector: 'app-recipe-list',
@@ -11,37 +12,29 @@ import {RecipeService} from "../recipe.service";
   styleUrl: './recipe-list.component.css',
 })
 export class RecipeListComponent implements OnInit, OnDestroy {
-  // @Output() recipeWasSelected = new EventEmitter<RecipeModel>();
-  // recipes: RecipeModel[] = [
-  //   new RecipeModel('test1', 'desc', 'https://marketplace.canva.com/EAFjF3L3SYk/2/0/1600w/canva-grey-beige-minimalist-apple-pie-recipe-card-FWhb_7OLPUY.jpg'),
-  //   new RecipeModel('test', 'desc', 'https://marketplace.canva.com/EAFjF3L3SYk/2/0/1600w/canva-grey-beige-minimalist-apple-pie-recipe-card-FWhb_7OLPUY.jpg')
-  // ];
   recipes: RecipeModel[];
   subscription: Subscription;
 
   constructor(
-    private recipeService: RecipeService,
     private router: Router,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private store: Store<fromApp.AppState>
   ) {
   }
 
   ngOnInit() {
-    this.subscription = this.recipeService.recipesChanged.subscribe(
-      (recipes: RecipeModel[]) => {
-        this.recipes = recipes
-      }
-    );
-    this.recipes = this.recipeService.getRecipes();
+    this.subscription = this.store
+      .select('recipes')
+      .pipe(map((recipesState) => recipesState.recipes))
+      .subscribe((recipes: RecipeModel[]) => {
+          this.recipes = recipes
+        }
+      );
   };
 
   onNewRecipe() {
     this.router.navigate(['new'], {relativeTo: this.route});
   };
-
-  // onRecipeSelected(recipeEl: RecipeModel) {
-  //   this.recipeWasSelected.emit(recipeEl);
-  // };
 
   ngOnDestroy() {
     this.subscription.unsubscribe();
