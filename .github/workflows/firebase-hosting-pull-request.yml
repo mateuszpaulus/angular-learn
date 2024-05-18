@@ -13,6 +13,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+      - name: Install Dependencies and Build
+        working-directory: basic-recipes-app
+        run: |
+          npm ci
+          npm run build
+      - name: Deploy to Firebase Hosting
       - run: npm ci && npm run build
       - uses: FirebaseExtended/action-hosting-deploy@v0
         with:
