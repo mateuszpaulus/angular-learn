@@ -11,7 +11,7 @@
             ngModel
             required
             type="text"
-          >
+          />
           <!--          <input #nameInput class="form-control" id="name" type="text">-->
         </div>
         <div class="col-sm-2 form-group">
@@ -24,7 +24,7 @@
             pattern="^[1-9]+[0-9]*$"
             required
             type="number"
-          >
+          />
           <!--          <input #amountInput class="form-control" id="amount" type="number">-->
         </div>
         <div class="row">
@@ -34,7 +34,7 @@
               class="btn btn-success"
               type="submit"
             >
-              {{ editMode ? 'Update' : 'Add' }}
+              {{ editMode ? "Update" : "Add" }}
             </button>
             <!--            <button (click)="onAddItem()" class="btn btn-success" type="submit"> Add</button>-->
             <button
@@ -45,11 +45,7 @@
             >
               Delete
             </button>
-            <button
-              (click)="onClear()"
-              class="btn btn-primary"
-              type="button"
-            >
+            <button (click)="onClear()" class="btn btn-primary" type="button">
               Clear
             </button>
           </div>
