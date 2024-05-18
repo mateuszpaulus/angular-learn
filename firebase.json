@@ -1,0 +1,12 @@
+{
+  "hosting": {
+    "public": "basic-recipes-app/dist/basic-recipes-app/browser",
+    "ignore": ["firebase.json", "**/.*", "**/node_modules/**"],
+    "rewrites": [
+      {
+        "source": "**",
+        "destination": "/index.html"
+      }
+    ]
+  }
+}
