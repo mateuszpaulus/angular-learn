@@ -8,10 +8,9 @@ describe('ShoppingListComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ShoppingListComponent]
-    })
-    .compileComponents();
-    
+      declarations: [ShoppingListComponent],
+    }).compileComponents();
+
     fixture = TestBed.createComponent(ShoppingListComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();

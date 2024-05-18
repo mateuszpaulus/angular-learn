@@ -1,18 +1,16 @@
-import {NgModule} from "@angular/core";
-import {NgOptimizedImage} from "@angular/common";
-import {RouterModule} from "@angular/router";
-import {ReactiveFormsModule} from "@angular/forms";
+import { NgModule } from '@angular/core';
+import { NgOptimizedImage } from '@angular/common';
+import { RouterModule } from '@angular/router';
+import { ReactiveFormsModule } from '@angular/forms';
 
-import {RecipeDetailComponent} from "./recipe-detail/recipe-detail.component";
-import {RecipeListComponent} from "./recipe-list/recipe-list.component";
-import {
-  RecipeItemComponent
-} from "./recipe-list/recipe-item/recipe-item.component";
-import {RecipeStartComponent} from "./recipe-start/recipe-start.component";
-import {RecipeEditComponent} from "./recipe-edit/recipe-edit.component";
-import {RecipesComponent} from "./recipes.component";
-import {RecipesRoutingModule} from "./recipes-routing.module";
-import {SharedModule} from "../shared/shared.module";
+import { RecipeDetailComponent } from './recipe-detail/recipe-detail.component';
+import { RecipeListComponent } from './recipe-list/recipe-list.component';
+import { RecipeItemComponent } from './recipe-list/recipe-item/recipe-item.component';
+import { RecipeStartComponent } from './recipe-start/recipe-start.component';
+import { RecipeEditComponent } from './recipe-edit/recipe-edit.component';
+import { RecipesComponent } from './recipes.component';
+import { RecipesRoutingModule } from './recipes-routing.module';
+import { SharedModule } from '../shared/shared.module';
 
 @NgModule({
   declarations: [
@@ -29,7 +27,7 @@ import {SharedModule} from "../shared/shared.module";
     ReactiveFormsModule,
     RecipesRoutingModule,
     NgOptimizedImage,
-    SharedModule
+    SharedModule,
   ],
   // exports: [
   //   RecipeDetailComponent,
@@ -40,6 +38,4 @@ import {SharedModule} from "../shared/shared.module";
   //   RecipesComponent,
   // ]
 })
-export class RecipesModule {
-
-}
+export class RecipesModule {}

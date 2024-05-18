@@ -1,6 +1,6 @@
-import {Subject} from "rxjs";
+import { Subject } from 'rxjs';
 
-import {IngredientModel} from "../shared/ingredient.model";
+import { IngredientModel } from '../shared/ingredient.model';
 
 export class ShoppingListService {
   // ingredientsChange = new EventEmitter<IngredientModel[]>();
@@ -9,7 +9,7 @@ export class ShoppingListService {
 
   private ingredients: IngredientModel[] = [
     new IngredientModel('Apples', 5),
-    new IngredientModel('Tomatoes', 10)
+    new IngredientModel('Tomatoes', 10),
   ];
 
   getIngredients() {
@@ -18,13 +18,13 @@ export class ShoppingListService {
 
   getIngredient(index: number) {
     return this.ingredients[index];
-  };
+  }
 
   addIngredient(ingredient: IngredientModel) {
     this.ingredients.push(ingredient);
     // this.ingredientsChange.emit(this.ingredients.slice());
     this.ingredientsChange.next(this.ingredients.slice());
-  };
+  }
 
   addIngredients(ingredients: IngredientModel[]) {
     // for (let ingredient of ingredients) {
@@ -33,15 +33,15 @@ export class ShoppingListService {
     this.ingredients.push(...ingredients);
     // this.ingredientsChange.emit(this.ingredients.slice());
     this.ingredientsChange.next(this.ingredients.slice());
-  };
+  }
 
   updateIngredient(index: number, newIngredient: IngredientModel) {
     this.ingredients[index] = newIngredient;
     this.ingredientsChange.next(this.ingredients.slice());
-  };
+  }
 
   deleteIngredient(index: number) {
     this.ingredients.splice(index, 1);
     this.ingredientsChange.next(this.ingredients.slice());
-  };
+  }
 }

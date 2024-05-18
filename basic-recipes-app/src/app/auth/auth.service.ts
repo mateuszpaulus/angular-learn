@@ -1,10 +1,10 @@
-import {HttpClient, HttpErrorResponse} from "@angular/common/http";
-import {Injectable} from "@angular/core";
-import {catchError, tap} from "rxjs/operators";
-import {BehaviorSubject, throwError} from "rxjs";
-import {Router} from "@angular/router";
-
-import {UserModel} from "./user.model";
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import { catchError, tap } from 'rxjs/operators';
+import { BehaviorSubject, throwError } from 'rxjs';
+import { Router } from '@angular/router';
+import { UserModel } from './user.model';
+import { environment } from '../../environments/environment';
 
 export interface AuthResponseData {
   kind: string;
@@ -17,30 +17,29 @@ export interface AuthResponseData {
 }
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class AuthService {
-
   // user = new Subject<UserModel>();
   user = new BehaviorSubject<UserModel>(null);
   private tokenExpirationTimer: any;
 
-  constructor(private http: HttpClient, private router: Router) {
-  }
+  constructor(private http: HttpClient, private router: Router) {}
 
   signup(email: string, password: string) {
     return this.http
       .post<AuthResponseData>(
-        'https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyDRxpxyppQQY7Y7BnZJiiI8D6BvnVGYsrc',
+        'https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=' +
+          environment.firebaseAPIKey,
         {
           email: email,
           password: password,
-          returnSecureToken: true
+          returnSecureToken: true,
         }
       )
       .pipe(
         catchError(this.handleError),
-        tap(responseData => {
+        tap((responseData) => {
           this.handleAuthentication(
             responseData.email,
             responseData.localId,
@@ -57,21 +56,22 @@ export class AuthService {
           // this.user.next(user);
         })
       );
-  };
+  }
 
   login(email: string, password: string) {
     return this.http
       .post<AuthResponseData>(
-        'https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyDRxpxyppQQY7Y7BnZJiiI8D6BvnVGYsrc',
+        'https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=' +
+          environment.firebaseAPIKey,
         {
           email: email,
           password: password,
-          returnSecureToken: true
+          returnSecureToken: true,
         }
       )
       .pipe(
         catchError(this.handleError),
-        tap(responseData => {
+        tap((responseData) => {
           this.handleAuthentication(
             responseData.email,
             responseData.localId,
@@ -80,14 +80,14 @@ export class AuthService {
           );
         })
       );
-  };
+  }
 
   autoLogin() {
     const userData: {
-      email: string,
-      id: string,
-      _token: string,
-      _tokenExpirationDate: string,
+      email: string;
+      id: string;
+      _token: string;
+      _tokenExpirationDate: string;
     } = JSON.parse(localStorage.getItem('userData'));
     if (!userData) {
       return;
@@ -101,7 +101,9 @@ export class AuthService {
 
     if (loadedUser.token) {
       this.user.next(loadedUser);
-      const expirationDuration = new Date(userData._tokenExpirationDate).getTime() - new Date().getTime();
+      const expirationDuration =
+        new Date(userData._tokenExpirationDate).getTime() -
+        new Date().getTime();
       this.autoLogout(expirationDuration);
     }
   }
@@ -114,13 +116,13 @@ export class AuthService {
       clearTimeout(this.tokenExpirationTimer);
     }
     this.tokenExpirationTimer = null;
-  };
+  }
 
   autoLogout(expirationDuration: number) {
     this.tokenExpirationTimer = setTimeout(() => {
       this.logout();
     }, expirationDuration);
-  };
+  }
 
   private handleAuthentication(
     email: string,
@@ -129,14 +131,9 @@ export class AuthService {
     expiresIn: number
   ) {
     const expirationDate = new Date(new Date().getTime() + +expiresIn * 1000);
-    const user = new UserModel(
-      email,
-      userId,
-      token,
-      expirationDate
-    );
+    const user = new UserModel(email, userId, token, expirationDate);
     this.user.next(user);
-    this.autoLogout(expiresIn * 1000)
+    this.autoLogout(expiresIn * 1000);
     localStorage.setItem('userData', JSON.stringify(user));
   }
 
@@ -153,7 +150,7 @@ export class AuthService {
         errorMessage = 'This email does not exist.';
         break;
       case 'INVALID_PASSWORD':
-        errorMessage = 'This password is not correct.'
+        errorMessage = 'This password is not correct.';
         break;
     }
     return throwError(errorMessage);

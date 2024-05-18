@@ -1,8 +1,8 @@
-import {NgModule} from "@angular/core";
-import {ShoppingListService} from "./shopping-list/shopping-list.service";
-import {RecipeService} from "./recipes/recipe.service";
-import {AuthInterceptorService} from "./auth/auth-interceptor.service";
-import {HTTP_INTERCEPTORS} from "@angular/common/http";
+import { NgModule } from '@angular/core';
+import { ShoppingListService } from './shopping-list/shopping-list.service';
+import { RecipeService } from './recipes/recipe.service';
+import { AuthInterceptorService } from './auth/auth-interceptor.service';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
 
 @NgModule({
   providers: [
@@ -11,10 +11,8 @@ import {HTTP_INTERCEPTORS} from "@angular/common/http";
     {
       provide: HTTP_INTERCEPTORS,
       useClass: AuthInterceptorService,
-      multi: true
-    }
-  ]
+      multi: true,
+    },
+  ],
 })
-export class CoreModule {
-
-}
+export class CoreModule {}
